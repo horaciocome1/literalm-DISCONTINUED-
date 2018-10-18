@@ -17,7 +17,7 @@ This is an alpha version and the app stores data localy. Im planing on taking ad
 I use git for versioning. Please read Contributing section.
 
 ## Licenses
-   Copyright [2018] [Horácio Flávio Comé Júnior]
+   Copyright 2018 Horácio Flávio Comé Júnior
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -36,4 +36,4 @@ All pull requests are welcome. Please be expressive so other can even understand
 
 ## Screenshots
 App uprunning on an [Nougat](https://www.android.com/versions/nougat-7-0/) phone
-[New poetry](screenshots/screenshot02.jpg)
+![New poetry](screenshots/screenshot02.jpg)
