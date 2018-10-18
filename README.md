@@ -1,4 +1,4 @@
-# literalm
+# Literal M
 Android app that serves as front-end to the mozambican literature (poems, lyrics, books and more).
 
 ## Getting started
