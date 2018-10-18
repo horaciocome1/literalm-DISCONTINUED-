@@ -36,3 +36,4 @@ All pull requests are welcome. Please be expressive so other can even understand
 
 ## Screenshots
 App uprunning on an [Nougat](https://www.android.com/versions/nougat-7-0/) phone
+[New poetry](screenshots/screenshot02).jpg
