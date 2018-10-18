@@ -36,4 +36,4 @@ All pull requests are welcome. Please be expressive so other can even understand
 
 ## Screenshots
 App uprunning on an [Nougat](https://www.android.com/versions/nougat-7-0/) phone
-![New poetry](screenshots/screenshot02.jpg)
+![All poetries](screenshots/screenshot04.jpg) ![New poetry](screenshots/screenshot05.png) ![View poetry](screenshots/screenshot03.png) ![Edit poetry](screenshots/screenshot02.jpg) ![Delete poetry](screenshots/screenshot06.png)
