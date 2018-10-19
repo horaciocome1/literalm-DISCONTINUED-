@@ -40,20 +40,25 @@ public class MyPoemasRecyclerViewAdapter extends RecyclerView.Adapter<MyPoemasRe
         return mList.size();
     }
     
-    public void addListItem(Poema poema, int position) {
+    public void addListItem(Poema poema) {
         mList.add(poema);
-        notifyItemInserted(position);
+        notifyItemInserted(getItemCount() - 1);
     }
     
     public void alterListItem(Poema poema) {
         for (int i = 0; i < mList.size(); i++)
-            if (mList.get(i).getId().toString().equalsIgnoreCase(poema.getId().toString()))
+            if (mList.get(i).getId().equalsIgnoreCase(poema.getId())) {
+                mList.set(i, poema);
                 notifyItemChanged(i);
+            }
     }
     
-    public void removeListItem(int position) {
-        mList.remove(position);
-        notifyItemRemoved(position);
+    public void removeListItem(String key) {
+        for (int i = 0; i < mList.size(); i++)
+            if (mList.get(i).getId().equalsIgnoreCase(key)) {
+                mList.remove(i);
+                notifyItemRemoved(i);
+            }
     }
     
     class MyViewHolder extends RecyclerView.ViewHolder {

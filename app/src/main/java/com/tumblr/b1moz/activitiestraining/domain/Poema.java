@@ -2,7 +2,7 @@ package com.tumblr.b1moz.activitiestraining.domain;
 
 public class Poema {
     
-    private Long id;
+    private String id;
     private String titulo;
     private String nomeAutor;
     private String data;
@@ -36,11 +36,11 @@ public class Poema {
         this.data = data;
     }
     
-    public Long getId() {
+    public String getId() {
         return id;
     }
     
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
     

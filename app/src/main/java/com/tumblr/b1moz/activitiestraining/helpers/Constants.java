@@ -4,10 +4,17 @@ public class Constants {
     
     private Constants(){};
     
+    public static class RealtimeDatabase {
+        
+        public final static String POEMS_DETAILS_NODE = "poems_details";
+        public final static String POEMS_NODE = "poems";
+        
+    }
+    
     public static class Database {
         
         public final static String name = "literalm";
-        public final static int version = 5;
+        public final static int version = 6;
         
         public static class TablePoemas {
     
@@ -21,7 +28,7 @@ public class Constants {
             public static final String col5 = "data";
     
             public static final String createTable = "create table " + name + "("
-                    + col0 + " integer primary key, "
+                    + col0 + " text primary key, "
                     + col1 + " text, "
                     + col2 + " text, "
                     + col3 + " text, "

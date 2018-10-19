@@ -74,7 +74,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Poema poema;
         while (cursor.moveToNext()) {
             poema = new Poema();
-            poema.setId(cursor.getLong(0));
+            poema.setId(cursor.getString(0));
             poema.setTitulo(cursor.getString(1));
             poema.setNomeAutor(cursor.getString(2));
             poema.setData(cursor.getString(3));
@@ -83,14 +83,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return poemas;
     }
     
-    public Poema readOne(Long id) {
+    public Poema readOne(String id) {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(Constants.Database.TablePoemas.name, new String[]{col0,
                         col1, col2, col3, col4, col5}, whereIdClause, new String[]{String.valueOf
                         (id)}, null, null, null);
         Poema poema = new Poema();
         if (cursor.moveToFirst()) {
-            poema.setId(cursor.getLong(0));
+            poema.setId(cursor.getString(0));
             poema.setTitulo(cursor.getString(1));
             poema.setNomeAutor(cursor.getString(2));
             poema.setConteudo(cursor.getString(3));
@@ -100,7 +100,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return poema;
     }
     
-    public void deletePoema(Long id) {
+    public void deletePoema(String id) {
         SQLiteDatabase database = this.getWritableDatabase();
         database.delete(Constants.Database.TablePoemas.name, whereIdClause, new String[]{String
                 .valueOf(id)});

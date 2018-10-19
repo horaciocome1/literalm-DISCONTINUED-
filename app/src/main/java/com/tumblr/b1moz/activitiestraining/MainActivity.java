@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tumblr.b1moz.activitiestraining.adapters.MyPoemasRecyclerViewAdapter;
 import com.tumblr.b1moz.activitiestraining.domain.Poema;
+import com.tumblr.b1moz.activitiestraining.helpers.Constants;
 import com.tumblr.b1moz.activitiestraining.helpers.MyDatabaseHelper;
 import com.wordpress.beendora.simplerecyclerviewtouchlistener.SimpleOnItemTouchListener;
 import com.wordpress.beendora.simplerecyclerviewtouchlistener.SimpleRecyclerViewOnItemTouchListener;
@@ -62,6 +63,35 @@ public class MainActivity extends AppCompatActivity {
         poemas = new ArrayList<>();
         mAdapter = new MyPoemasRecyclerViewAdapter(poemas);
         
+        DatabaseReference childRef = mDatabaseReference.child(Constants.RealtimeDatabase.POEMS_NODE);
+        childRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Poema poema = dataSnapshot.getValue(Poema.class);
+                poema.setId(dataSnapshot.getKey());
+                mAdapter.addListItem(poema);
+            }
+    
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            
+            }
+    
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+        
+            }
+    
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+        
+            }
+    
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+        
+            }
+        });
         
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnItemTouchListener(new SimpleRecyclerViewOnItemTouchListener(this,
@@ -91,39 +121,8 @@ public class MainActivity extends AppCompatActivity {
         super.onPostResume();
 //        poemas = helper.readAll();
 //        recyclerView.setAdapter(mAdapter);
-        
-        DatabaseReference childRef = mDatabaseReference.child("poem-details");
-        childRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Poema poema = dataSnapshot.getValue(Poema.class);
-                poema.setId(Long.valueOf(dataSnapshot.getKey()));
-                mAdapter.addListItem(poema, poemas.size() - 1);
-            }
     
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                Poema poema = dataSnapshot.getValue(Poema.class);
-//                poema.setId(Long.valueOf(dataSnapshot.getKey()));
-//                mAdapter.alterListItem(poema);
-            }
     
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-        
-            }
-    
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        
-            }
-    
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-        
-            }
-        });
-        
     }
 
 }
