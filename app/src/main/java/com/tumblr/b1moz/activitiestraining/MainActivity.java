@@ -1,6 +1,8 @@
 package com.tumblr.b1moz.activitiestraining;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,8 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tumblr.b1moz.activitiestraining.adapters.MyPoemasRecyclerViewAdapter;
 import com.tumblr.b1moz.activitiestraining.domain.Poema;
+import com.tumblr.b1moz.activitiestraining.helpers.Constants;
 import com.tumblr.b1moz.activitiestraining.helpers.MyDatabaseHelper;
 import com.wordpress.beendora.simplerecyclerviewtouchlistener.SimpleOnItemTouchListener;
 import com.wordpress.beendora.simplerecyclerviewtouchlistener.SimpleRecyclerViewOnItemTouchListener;
@@ -21,14 +29,20 @@ public class MainActivity extends AppCompatActivity {
 
     Button buttonCadastrar;
     RecyclerView recyclerView;
-    MyDatabaseHelper helper;
+    
     List<Poema> poemas;
     
+    MyDatabaseHelper helper;
+    MyPoemasRecyclerViewAdapter mAdapter;
+    
+    DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         
         getSupportActionBar().setTitle("Literal M");
 
@@ -45,8 +59,41 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         helper = new MyDatabaseHelper(this);
-        poemas = helper.readAll();
-        recyclerView.setAdapter(new MyPoemasRecyclerViewAdapter(poemas));
+//        poemas = helper.readAll();
+        poemas = new ArrayList<>();
+        mAdapter = new MyPoemasRecyclerViewAdapter(poemas);
+        
+        DatabaseReference childRef = mDatabaseReference.child(Constants.RealtimeDatabase.POEMS_NODE);
+        childRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Poema poema = dataSnapshot.getValue(Poema.class);
+                poema.setId(dataSnapshot.getKey());
+                mAdapter.addListItem(poema);
+            }
+    
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            
+            }
+    
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+        
+            }
+    
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+        
+            }
+    
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+        
+            }
+        });
+        
+        recyclerView.setAdapter(mAdapter);
         recyclerView.addOnItemTouchListener(new SimpleRecyclerViewOnItemTouchListener(this,
                 recyclerView, new SimpleOnItemTouchListener() {
             @Override
@@ -66,27 +113,16 @@ public class MainActivity extends AppCompatActivity {
         
             }
         }));
+        
     }
     
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        poemas = helper.readAll();
-        recyclerView.setAdapter(new MyPoemasRecyclerViewAdapter(poemas));
-        
-    }
+//        poemas = helper.readAll();
+//        recyclerView.setAdapter(mAdapter);
     
-    private List<Poema> gerarPoemasFalsos(int size) {
-        List<Poema> poemas = new ArrayList<>();
-        Poema poema;
-        for (int i = 0; i < size; i++) {
-            poema = new Poema();
-            poema.setTitulo("A Leveza do ser");
-            poema.setNomeAutor("Genmi Auti");
-            poema.setData("13/10/2018");
-            poemas.add(poema);
-        }
-        return poemas;
+    
     }
 
 }
