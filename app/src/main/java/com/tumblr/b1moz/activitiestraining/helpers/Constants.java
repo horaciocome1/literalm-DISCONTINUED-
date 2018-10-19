@@ -2,7 +2,22 @@ package com.tumblr.b1moz.activitiestraining.helpers;
 
 public class Constants {
     
-    private Constants(){};
+    private Constants(){}
+    
+    public final static String LOGOUT_EXTRA_NAME = "logout";
+    public final static int LOGOUT_EXTRA_DATA = -500;
+    
+    public static class RequestCode {
+        
+        public final static int START_ACCOUNT_ACTIVITY = 210;
+        
+    }
+    
+    public static class FirebaseAuthentication {
+    
+        public static final int RC_SIGN_IN = 123;
+    
+    }
     
     public static class RealtimeDatabase {
         

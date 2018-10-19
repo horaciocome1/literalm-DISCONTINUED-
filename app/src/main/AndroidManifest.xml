@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name = ".CadastroActivity" />
-        <activity android:name = ".VerPoemaActivity"/>
+        <activity android:name = ".VerPoemaActivity" />
+        <activity android:name = ".SignInActivity" />
+        <activity android:name = ".AccountActivity"></activity>
     </application>
 
 </manifest>
