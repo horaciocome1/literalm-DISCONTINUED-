@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tumblr.b1moz.activitiestraining.domain.Poema;
 import com.tumblr.b1moz.activitiestraining.helpers.MyDatabaseHelper;
 
@@ -19,11 +23,15 @@ public class CadastroActivity extends AppCompatActivity {
     EditText editTextConteudo;
     EditText editTextCategoria;
     EditText editTextData;
+    
+    FirebaseDatabase mFirebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+    
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
         
         getSupportActionBar().setTitle("Cadastro");
     
@@ -39,7 +47,7 @@ public class CadastroActivity extends AppCompatActivity {
         if (!(id == -1)) {
             getSupportActionBar().setSubtitle("Editar poema");
             
-            Poema poema = (new MyDatabaseHelper(this)).readOne(id);
+            Poema poema = (new MyDatabaseHelper(this)).readOne((long) id);
             editTextTitulo.setText(poema.getTitulo());
             editTextNomeAutor.setText(poema.getNomeAutor());
             editTextConteudo.setText(poema.getConteudo());
@@ -68,15 +76,24 @@ public class CadastroActivity extends AppCompatActivity {
                 Poema poema = new Poema();
                 poema.setTitulo(editTextTitulo.getText().toString());
                 poema.setNomeAutor(editTextNomeAutor.getText().toString());
-                poema.setConteudo(editTextConteudo.getText().toString());
-                poema.setCategoria(editTextCategoria.getText().toString());
                 poema.setData(editTextData.getText().toString());
                 
                 MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(context);
-                if (id == -1)
+                if (id == -1) {
                     myDatabaseHelper.addPoema(poema);
+                    
+                    DatabaseReference myRef = mFirebaseDatabase.getReference();
+                    
+                    DatabaseReference childRef = myRef.child("poem-details");
+                    childRef.push().setValue(poema);
+    
+                    poema.setCategoria(editTextCategoria.getText().toString());
+                    poema.setConteudo(editTextConteudo.getText().toString());
+                    childRef = myRef.child("poems");
+                    childRef.push().setValue(poema);
+                }
                 else {
-                    poema.setId(id);
+                    poema.setId((long) id);
                     myDatabaseHelper.updatePoema(poema);
                 }
                 

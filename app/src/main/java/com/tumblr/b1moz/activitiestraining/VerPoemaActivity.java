@@ -79,7 +79,7 @@ public class VerPoemaActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        poema = (new MyDatabaseHelper(this)).readOne(getIntent()
+        poema = (new MyDatabaseHelper(this)).readOne((long) getIntent()
                 .getIntExtra("id", - 1));
     
         getSupportActionBar().setSubtitle(poema.getCategoria());

@@ -6,8 +6,8 @@ public class Constants {
     
     public static class Database {
         
-        public final static String name = "ccp_poemas";
-        public final static int version = 4;
+        public final static String name = "literalm";
+        public final static int version = 5;
         
         public static class TablePoemas {
     
@@ -21,7 +21,7 @@ public class Constants {
             public static final String col5 = "data";
     
             public static final String createTable = "create table " + name + "("
-                    + col0 + " integer primary key autoincrement, "
+                    + col0 + " integer primary key, "
                     + col1 + " text, "
                     + col2 + " text, "
                     + col3 + " text, "
