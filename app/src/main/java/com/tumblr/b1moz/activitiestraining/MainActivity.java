@@ -1,45 +1,39 @@
 package com.tumblr.b1moz.activitiestraining;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tumblr.b1moz.activitiestraining.adapters.MyPoemasRecyclerViewAdapter;
 import com.tumblr.b1moz.activitiestraining.domain.Poema;
 import com.tumblr.b1moz.activitiestraining.helpers.Constants;
-import com.tumblr.b1moz.activitiestraining.helpers.MyDatabaseHelper;
+import com.tumblr.b1moz.activitiestraining.helpers.PoemaHolder;
 import com.wordpress.beendora.simplerecyclerviewtouchlistener.SimpleOnItemTouchListener;
 import com.wordpress.beendora.simplerecyclerviewtouchlistener.SimpleRecyclerViewOnItemTouchListener;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     Button buttonCadastrar;
     RecyclerView recyclerView;
     
-    MyPoemasRecyclerViewAdapter mAdapter;
+    FirebaseRecyclerAdapter mAdapter;
     
     DatabaseReference mDatabaseReference;
     FirebaseUser mFirebaseUser;
@@ -59,23 +53,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CadastroActivity.class);
-
                 startActivity(intent);
             }
         });
-    }
-    
-    private void signIn() {
-        startActivityForResult(new Intent(MainActivity.this, SignInActivity.class), Constants
-                .RequestCode.START_SIGN_IN_ACTIVITY);
+        
+        setupList();
     }
     
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        
-        if (isUserLogged())
-            setupList();
+    protected void onStart() {
+        super.onStart();
+        mAdapter.startListening();
     }
     
     @Override
@@ -118,50 +106,62 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAdapter.stopListening();
+    }
+    
+    private void signIn() {
+        startActivityForResult(new Intent(MainActivity.this, SignInActivity.class), Constants
+                .RequestCode.START_SIGN_IN_ACTIVITY);
+    }
+    
     private void setupList() {
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MyPoemasRecyclerViewAdapter(new ArrayList<Poema>());
-
-        DatabaseReference childRef = mDatabaseReference.child(Constants.RealtimeDatabase.POEMS_NODE);
-        childRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Poema poema = dataSnapshot.getValue(Poema.class);
-                poema.setId(dataSnapshot.getKey());
-                mAdapter.addListItem(poema);
-            }
+        recyclerView.setHasFixedSize(true);
     
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(Constants
+                .RealtimeDatabase.POEMS_NODE);
         
-            }
+        FirebaseRecyclerOptions<Poema> options = new FirebaseRecyclerOptions.Builder<Poema>()
+                .setQuery(mDatabaseReference, new SnapshotParser<Poema>() {
+                    @NonNull
+                    @Override
+                    public Poema parseSnapshot(@NonNull DataSnapshot snapshot) {
+                        Poema poema = snapshot.getValue(Poema.class);
+                        poema.setId(snapshot.getKey());
+                        return poema;
+                    }
+                }).build();
     
+        mAdapter = new FirebaseRecyclerAdapter<Poema, PoemaHolder>(options) {
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-        
+            protected void onBindViewHolder(@NonNull PoemaHolder holder, int position,
+                    @NonNull Poema model) {
+                holder.titulo.setText(model.getTitulo());
+                holder.nomeAutor.setText(model.getNomeAutor());
+                holder.data.setText(model.getData());
             }
-    
+        
+            @NonNull
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        
+            public PoemaHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
+                        .item_poema, viewGroup, false);
+                return new PoemaHolder(view);
             }
-    
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        };
         
-            }
-        });
-
         recyclerView.setAdapter(mAdapter);
+        
         recyclerView.addOnItemTouchListener(new SimpleRecyclerViewOnItemTouchListener(this,
                 recyclerView, new SimpleOnItemTouchListener() {
             @Override
             public void onItemClick(View view, int i) {
                 Intent intent = new Intent(MainActivity.this, VerPoemaActivity.class);
-//                    intent.putExtra("id", poemas.get(i).getId());
+                intent.putExtra(Constants.POEMA_ID_EXTRA_NAME, ((Poema) mAdapter.getItem(i)).getId());
                 startActivity(intent);
             }
     
