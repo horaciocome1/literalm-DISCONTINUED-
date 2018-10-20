@@ -32,7 +32,7 @@ public class AccountActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Void> task) {
                                 Intent intent = new Intent();
                                 intent.putExtra(Constants.LOGOUT_EXTRA_NAME, Constants.LOGOUT_EXTRA_DATA);
-                                setResult(Constants.RequestCode.START_ACCOUNT_ACTIVITY, intent);
+                                setResult(RESULT_OK, intent);
                                 
                                 finish();
                             }

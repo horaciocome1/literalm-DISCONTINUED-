@@ -39,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
     Button buttonCadastrar;
     RecyclerView recyclerView;
     
-    List<Poema> poemas;
-    
-    MyDatabaseHelper helper;
     MyPoemasRecyclerViewAdapter mAdapter;
     
     DatabaseReference mDatabaseReference;
@@ -51,14 +48,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
     
-        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mFirebaseUser == null)
+        if (!isUserLogged())
             signIn();
         
-        getSupportActionBar().setTitle("Literal M");
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
         buttonCadastrar = findViewById(R.id.cadastrar);
         buttonCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -69,13 +63,68 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
     
+    private void signIn() {
+        startActivityForResult(new Intent(MainActivity.this, SignInActivity.class), Constants
+                .RequestCode.START_SIGN_IN_ACTIVITY);
+    }
+    
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        
+        if (isUserLogged())
+            setupList();
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    
+        switch (requestCode) {
+            case Constants.RequestCode.START_SIGN_IN_ACTIVITY:
+                if (resultCode == RESULT_OK)
+                    mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                else
+                    finish();
+                break;
+                
+            case Constants.RequestCode.START_ACCOUNT_ACTIVITY:
+                if (resultCode == RESULT_OK)
+                    signIn();
+                break;
+                
+            default:
+                finish();
+        }
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (isUserLogged())
+            switch (item.getItemId()) {
+                case R.id.main_menu_account:
+                    startActivityForResult(new Intent(MainActivity.this, AccountActivity.class),
+                            Constants.RequestCode.START_ACCOUNT_ACTIVITY);
+                    return true;
+            }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    private void setupList() {
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        helper = new MyDatabaseHelper(this);
-        poemas = new ArrayList<>();
-        mAdapter = new MyPoemasRecyclerViewAdapter(poemas);
-        
+        mAdapter = new MyPoemasRecyclerViewAdapter(new ArrayList<Poema>());
+
         DatabaseReference childRef = mDatabaseReference.child(Constants.RealtimeDatabase.POEMS_NODE);
         childRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -87,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            
+        
             }
     
             @Override
@@ -105,14 +154,14 @@ public class MainActivity extends AppCompatActivity {
         
             }
         });
-        
+
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnItemTouchListener(new SimpleRecyclerViewOnItemTouchListener(this,
                 recyclerView, new SimpleOnItemTouchListener() {
             @Override
             public void onItemClick(View view, int i) {
                 Intent intent = new Intent(MainActivity.this, VerPoemaActivity.class);
-                intent.putExtra("id", poemas.get(i).getId());
+//                    intent.putExtra("id", poemas.get(i).getId());
                 startActivity(intent);
             }
     
@@ -126,68 +175,14 @@ public class MainActivity extends AppCompatActivity {
         
             }
         }));
-        
     }
     
-    private void signIn() {
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build()
-        );
-        
-        startActivityForResult(AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build(),
-                Constants.FirebaseAuthentication.RC_SIGN_IN);
-    }
-    
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    
-        switch (requestCode) {
-            case Constants.FirebaseAuthentication.RC_SIGN_IN:
-                IdpResponse response = IdpResponse.fromResultIntent(data);
-                
-                if (resultCode == RESULT_OK)
-                    mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                else {
-                    Snackbar.make(findViewById(R.id.activity_main_root), "Log in failed",
-                            Snackbar.LENGTH_INDEFINITE).setAction("Retry",
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    signIn();
-                                }
-                            })
-                            .show();
-                }
-                break;
-                
-            case Constants.RequestCode.START_ACCOUNT_ACTIVITY:
-                    if (resultCode == RESULT_OK)
-                        finish();
-                break;
+    private boolean isUserLogged() {
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mFirebaseUser == null) {
+            return false;
         }
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.main_menu_account:
-                startActivityForResult(new Intent(MainActivity.this, AccountActivity.class),
-                        Constants.RequestCode.START_ACCOUNT_ACTIVITY);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return true;
     }
     
 }

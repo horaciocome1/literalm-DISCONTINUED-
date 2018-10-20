@@ -5,11 +5,12 @@ public class Constants {
     private Constants(){}
     
     public final static String LOGOUT_EXTRA_NAME = "logout";
-    public final static int LOGOUT_EXTRA_DATA = -500;
+    public final static int LOGOUT_EXTRA_DATA = 500;
     
     public static class RequestCode {
         
         public final static int START_ACCOUNT_ACTIVITY = 210;
+        public final static int START_SIGN_IN_ACTIVITY = 230;
         
     }
     
