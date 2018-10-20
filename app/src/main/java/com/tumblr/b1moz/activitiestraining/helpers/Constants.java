@@ -7,6 +7,8 @@ public class Constants {
     public final static String LOGOUT_EXTRA_NAME = "logout";
     public final static int LOGOUT_EXTRA_DATA = 500;
     
+    public final static String POEMA_ID_EXTRA_NAME = "key";
+    
     public static class RequestCode {
         
         public final static int START_ACCOUNT_ACTIVITY = 210;

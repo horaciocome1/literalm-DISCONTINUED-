@@ -14,13 +14,14 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:textColor="@android:color/background_dark"/>
+        android:textColor="@color/primary_text"/>
 
     <TextView
         android:id="@+id/textview_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
+        android:textColor="@color/secondary_text"
         android:layout_alignBaseline="@+id/textview_titulo_poema"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -32,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
+        android:textColor="@color/secondary_text"
         android:layout_alignLeft="@id/textview_titulo_poema"
         android:layout_alignStart="@id/textview_titulo_poema"
         android:layout_below="@id/textview_titulo_poema"

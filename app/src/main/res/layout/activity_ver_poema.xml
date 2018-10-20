@@ -1,119 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/activity_ver_poema_root"
+    xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
     tools:context = ".VerPoemaActivity">
     
-    <Button
-        android:id="@+id/button_eliminar"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text="Eliminar"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:textColor="@android:color/holo_red_light"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart = "true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart = "32dp" />
-    
-    <Button
-        android:id="@+id/button_editar"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text="Editar"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:textColor="@color/primary"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd = "true"
-        android:layout_marginRight="32dp"
-        android:layout_marginEnd = "32dp" />
-    
-    <View
-        android:id="@+id/divider2"
+    <RelativeLayout
         android:layout_width = "match_parent"
-        android:layout_height = "1.5dp"
-        android:background="@android:color/darker_gray"
-        android:layout_above="@id/button_eliminar"/>
-    
-    <ScrollView
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:scrollbars="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/divider2">
+        android:layout_height = "wrap_content">
         
-        <LinearLayout
+        <Button
+            android:id="@+id/button_eliminar"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="Eliminar"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@android:color/holo_red_light"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart = "true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart = "32dp" />
+        
+        <Button
+            android:id="@+id/button_editar"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="Editar"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/primary"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd = "true"
+            android:layout_marginRight="32dp"
+            android:layout_marginEnd = "32dp" />
+        
+        <View
+            android:id="@+id/divider2"
+            android:layout_width = "match_parent"
+            android:layout_height = "1.5dp"
+            android:background="@android:color/darker_gray"
+            android:layout_above="@id/button_eliminar"/>
+        
+        <ScrollView
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:orientation="vertical">
+            android:scrollbars="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/divider2">
             
-            <TextView
-                android:id="@+id/textview_titulo_poema2"
+            <LinearLayout
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
-                android:textAlignment="center"
-                android:textSize="22sp"
-                android:textColor="@android:color/black"
-                android:text="A Leveza do Ser Indigente"
-                android:layout_marginTop="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginStart = "32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginEnd="32dp"/>
-    
-            <TextView
-                android:id="@+id/textview_nome_autor2"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                android:text="Jazmiq Timar"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginStart = "32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginEnd="32dp"/>
-    
-            <TextView
-                android:id="@+id/textview_conteudo2"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:text="Boa tarde, Docente Munguanaze,
-Espero que esteja tudo correndo bem do seu lado!
-Meu nome é Horácio Flávio Comé Júnior, 405882, estudante da turma de Engenharia Informática e de Telecomunicações, IV Semestre. E venho por este meio apresentar a minha indignação em relação à nota do segundo teste.
-No sistema, vejo que a nota lancada pelo docente foi 15.0. Porém, no teste, segundo a classificação do docente, a nota foi 18.0. Em anexo, seguem as fotos do respectivo teste.
-Neste momento, me encontro sem perceber o que poderá ter influenciado a alteração desta nota. Assim espero ansiosamente a resposta do docente.
-Peço que me desculpe por qualquer transtorno causado,
-Muito obrigado!"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginStart = "32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginEnd="32dp"/>
-    
-            <TextView
-                android:id="@+id/textview_data2"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:text="22/07/2014"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginStart = "32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="32dp"/>
-            
-        </LinearLayout>
+                android:orientation="vertical">
+                
+                <TextView
+                    android:id="@+id/textview_titulo_poema2"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:textColor="@color/primary_text"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart = "32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"/>
         
-    </ScrollView>
+                <TextView
+                    android:id="@+id/textview_nome_autor2"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/secondary_text"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart = "32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"/>
+        
+                <TextView
+                    android:id="@+id/textview_conteudo2"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_text"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart = "32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"/>
+        
+                <TextView
+                    android:id="@+id/textview_data2"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/secondary_text"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart = "32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="32dp"/>
+                
+            </LinearLayout>
+            
+        </ScrollView>
+        
+    </RelativeLayout>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
