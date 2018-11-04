@@ -8,34 +8,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_main_recyclerview"
         android:layout_width = "match_parent"
-        android:layout_height = "wrap_content">
-
-        <Button
-            android:id="@+id/cadastrar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cadastrar"
-            android:layout_alignParentBottom="true"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:textColor="@color/primary" />
+        android:layout_height = "match_parent"
+        android:scrollbars="vertical"
+        android:layout_alignParentTop="true"/>
     
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:background="@color/divider"
-            android:layout_above="@+id/cadastrar" />
-        
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:scrollbars="vertical"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/divider"/>
-        
-    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/activity_main_post_button"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        app:useCompatPadding="true"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        app:fabSize="auto"
+        app:srcCompat ="@drawable/ic_add_black_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

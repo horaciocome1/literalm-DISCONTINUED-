@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:app = "http://schemas.android.com/apk/res-auto"
+    android:id = "@+id/activity_ver_poema_root"
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:tools = "http://schemas.android.com/tools"
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent"
+    tools:context = ".ReadActivity">
+    
+    <RelativeLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content">
+        
+        <ImageButton
+            android:id="@+id/activity_read_delete_button"
+            android:layout_width = "24dp"
+            android:layout_height = "wrap_content"
+            app:srcCompat ="@drawable/ic_delete_forever_black_24dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:tint="@android:color/holo_red_light"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart = "true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart = "32dp" />
+        
+        <ImageButton
+            android:id="@+id/activity_read_edit_button"
+            android:layout_width = "24dp"
+            android:layout_height = "wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            app:srcCompat ="@drawable/ic_edit_black_24dp"
+            android:tint="@color/primary"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd = "true"
+            android:layout_marginRight="32dp"
+            android:layout_marginEnd = "32dp" />
+        
+        <ImageButton
+            android:id="@+id/activity_read_rating_button"
+            android:layout_width = "24dp"
+            android:layout_height = "wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            app:srcCompat ="@drawable/ic_star_half_black_24dp"
+            android:tint="@color/primary"
+            android:layout_toLeftOf="@id/activity_read_edit_button"
+            android:layout_toStartOf = "@id/activity_read_edit_button"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd = "16dp" />
+    
+        <ImageButton
+            android:id="@+id/activity_read_user_account_button"
+            android:layout_width = "24dp"
+            android:layout_height = "wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            app:srcCompat ="@drawable/ic_account_circle_black_24dp"
+            android:tint="@color/primary"
+            android:layout_toLeftOf="@id/activity_read_rating_button"
+            android:layout_toStartOf = "@id/activity_read_rating_button"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd = "16dp" />
+    
+        <ImageButton
+            android:id="@+id/activity_read_share_button"
+            android:layout_width = "24dp"
+            android:layout_height = "wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            app:srcCompat ="@drawable/ic_share_black_24dp"
+            android:tint="@color/primary"
+            android:layout_toLeftOf="@id/activity_read_user_account_button"
+            android:layout_toStartOf = "@id/activity_read_user_account_button"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd = "16dp" />
+        
+        <View
+            android:id="@+id/activity_read_divider"
+            android:layout_width = "match_parent"
+            android:layout_height = "0.01dp"
+            android:background="@android:color/darker_gray"
+            android:layout_above="@id/activity_read_delete_button"/>
+        
+        <ScrollView
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:scrollbars="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/activity_read_divider">
+            
+            <LinearLayout
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:orientation="vertical">
+                
+                <ImageView
+                    android:id="@+id/activity_read_cover_image"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "220dp"
+                    android:scaleType="centerCrop"/>
+                
+                <TextView
+                    android:id="@+id/activity_read_title_textview"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:textColor="@color/primary_text"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart = "32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"/>
+        
+                <TextView
+                    android:id="@+id/activity_read_author_textview"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/secondary_text"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart = "32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"/>
+        
+                <TextView
+                    android:id="@+id/activity_read_content_textview"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_text"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart = "32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"/>
+        
+                <TextView
+                    android:id="@+id/activity_read_date_textview"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/secondary_text"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart = "32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="32dp"/>
+                
+            </LinearLayout>
+            
+        </ScrollView>
+        
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
