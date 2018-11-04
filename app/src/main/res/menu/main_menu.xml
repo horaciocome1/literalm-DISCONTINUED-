@@ -4,7 +4,20 @@
     
     <item
         android:id = "@+id/main_menu_account"
-        android:title = "Conta"
-        app:showAsAction = "never" />
+        android:title = "Perfil"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        app:showAsAction = "ifRoom" />
+    
+    <item
+        android:id = "@+id/main_menu_settings"
+        android:title = "Definicoes"
+        android:icon = "@drawable/ic_settings_black_24dp"
+        app:showAsAction = "ifRoom" />
+    
+    <item
+        android:id = "@+id/main_menu_help"
+        android:title = "Ajuda"
+        android:icon = "@drawable/ic_help_black_24dp"
+        app:showAsAction = "ifRoom" />
 
 </menu>
